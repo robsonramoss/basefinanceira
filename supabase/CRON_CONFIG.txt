@@ -1,0 +1,60 @@
+================================================================================
+🔧 CONFIGURAÇÃO DE CRON JOBS - GRANAZAP V5
+================================================================================
+
+📋 INSTRUÇÕES PARA O ALUNO:
+
+1. Encontre seu Project Reference ID no Supabase:
+   - Acesse: Dashboard > Settings > General > Reference ID
+   - Copie o ID (exemplo: vrmickfxoxvyljounoxq)
+
+2. Cole o ID abaixo na linha indicada
+
+3. Arraste este arquivo para o chat do Windsurf/Claude
+
+4. Digite: "Configure o cron job com meu Project ID"
+
+5. A IA vai gerar o script SQL pronto para você copiar e colar no Supabase
+
+================================================================================
+
+⬇️ COLE SEU PROJECT REFERENCE ID AQUI:
+
+PROJECT_ID=YOUR_PROJECT_REF
+
+================================================================================
+
+📝 EXEMPLO DE PREENCHIMENTO:
+
+PROJECT_ID=vrmickfxoxvyljounoxq
+
+================================================================================
+
+🤖 INSTRUÇÕES PARA A IA (NÃO MEXA AQUI):
+
+Quando o aluno arrastar este arquivo, você deve:
+
+1. Ler o valor de PROJECT_ID acima
+2. Validar se não é 'YOUR_PROJECT_REF'
+3. Abrir o arquivo: supabase/setup_cron_jobs.sql
+4. Substituir TODAS as ocorrências de 'YOUR_PROJECT_REF' pelo valor de PROJECT_ID
+5. Salvar o arquivo modificado
+6. Mostrar mensagem de sucesso ao aluno com próximos passos
+
+Exemplo de substituição:
+- ANTES: v_project_ref TEXT := 'YOUR_PROJECT_REF';
+- DEPOIS: v_project_ref TEXT := 'vrmickfxoxvyljounoxq';
+
+IMPORTANTE: 
+- Substituir em TODAS as ocorrências (há 2 no arquivo)
+- Manter as aspas simples e ponto e vírgula
+- Não modificar nada além do valor entre aspas
+
+Após substituir, instruir o aluno:
+1. Abrir Supabase Dashboard > SQL Editor
+2. Copiar todo o conteúdo de supabase/setup_cron_jobs.sql
+3. Colar no SQL Editor
+4. Executar (Run)
+5. Verificar que os 2 cron jobs foram criados
+
+================================================================================

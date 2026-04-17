@@ -1,0 +1,358 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: 142.1 76.2% 36.3%; /* #22C55E - Green */
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: 142.1 76.2% 36.3%; /* #22C55E - Green */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: 142.1 76.2% 36.3%; /* #22C55E - Green */
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: 142.1 76.2% 36.3%; /* #22C55E - Green */
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: 142.1 76.2% 36.3%; /* #22C55E - Green */
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* =============================================
+   GRANAZAP v5 — DESIGN TOKENS (Light Mode Support)
+   
+   Dark = mantém visual atual (ZERO mudança)
+   Light = ativado quando user trocar tema
+   ============================================= */
+:root,
+.dark {
+  /* Fundos */
+  --bg-base:         #060A13;
+  --bg-card:         #111827;
+  --bg-card-inner:   #0A0F1C;
+  --bg-elevated:     #1E293B;
+  --bg-tooltip:      #1F2937;
+  --bg-hover:        rgba(255, 255, 255, 0.05);
+  --bg-active:       rgba(255, 255, 255, 0.08);
+
+  /* Textos */
+  --text-primary:    #FFFFFF;
+  --text-secondary:  #A1A1AA;
+  --text-tertiary:   #71717A;
+  --text-muted:      #52525B;
+  --text-disabled:   #3F3F46;
+
+  /* Bordas */
+  --border-default:  rgba(255, 255, 255, 0.05);
+  --border-medium:   rgba(255, 255, 255, 0.10);
+  --border-strong:   rgba(255, 255, 255, 0.20);
+
+  /* Inputs */
+  --input-bg:        #0A0F1C;
+  --input-border:    rgba(255, 255, 255, 0.10);
+  --input-text:      #FFFFFF;
+  --input-placeholder: #52525B;
+  --autofill-text:   #FFFFFF;
+  --autofill-shadow: #1e293b;
+
+  /* Gráficos Recharts */
+  --chart-grid:       rgba(255, 255, 255, 0.05);
+  --chart-axis:       #71717A;
+  --chart-tooltip-bg: #1F2937;
+  --chart-tooltip-bd: rgba(255, 255, 255, 0.10);
+  --chart-tooltip-tx: #D4D4D8;
+  --chart-cursor:     rgba(255, 255, 255, 0.05);
+
+  /* Skeleton Loading */
+  --skeleton-pulse:   rgba(255, 255, 255, 0.06);
+  --skeleton-card:    rgba(255, 255, 255, 0.03);
+
+  /* Scrollbar */
+  --scrollbar-track:  #0A0F1C;
+  --scrollbar-thumb:  #374151;
+
+  /* Shadows (dark = none, borders give depth) */
+  --shadow-sm:    none;
+  --shadow-card:  none;
+  --shadow-md:    none;
+  --shadow-lg:    none;
+  --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.light {
+  /* Fundos */
+  --bg-base:         #F1F5F9;
+  --bg-card:         #FFFFFF;
+  --bg-card-inner:   #F8FAFC;
+  --bg-elevated:     #F1F5F9;
+  --bg-tooltip:      #FFFFFF;
+  --bg-hover:        rgba(0, 0, 0, 0.04);
+  --bg-active:       rgba(0, 0, 0, 0.07);
+
+  /* Textos */
+  --text-primary:    #0F172A;
+  --text-secondary:  #475569;
+  --text-tertiary:   #64748B;
+  --text-muted:      #94A3B8;
+  --text-disabled:   #CBD5E1;
+
+  /* Bordas */
+  --border-default:  #E2E8F0;
+  --border-medium:   #CBD5E1;
+  --border-strong:   #94A3B8;
+
+  /* Inputs */
+  --input-bg:        #FFFFFF;
+  --input-border:    #CBD5E1;
+  --input-text:      #0F172A;
+  --input-placeholder: #94A3B8;
+  --autofill-text:   #0F172A;
+  --autofill-shadow: #FFFFFF;
+
+  /* Gráficos Recharts */
+  --chart-grid:       rgba(0, 0, 0, 0.06);
+  --chart-axis:       #64748B;
+  --chart-tooltip-bg: #FFFFFF;
+  --chart-tooltip-bd: #E2E8F0;
+  --chart-tooltip-tx: #0F172A;
+  --chart-cursor:     rgba(0, 0, 0, 0.04);
+
+  /* Skeleton Loading */
+  --skeleton-pulse:   #E2E8F0;
+  --skeleton-card:    #F1F5F9;
+
+  /* Scrollbar */
+  --scrollbar-track:  #F1F5F9;
+  --scrollbar-thumb:  #CBD5E1;
+
+  /* Shadows (light = depth via shadow) */
+  --shadow-sm:    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card:  0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.09), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.07);
+
+  /* Stronger borders in light for readability */
+  --border-default:  #E2E8F0;
+  --border-medium:   #CBD5E1;
+  --border-strong:   #94A3B8;
+}
+
+/* =============================================
+   LIGHT MODE — Global polish
+   Card shadows, alert contrast, inputs, scrollbar
+   ============================================= */
+
+/* --- Card depth via shadow --- */
+.light .bg-\[var\(--bg-card\)\] {
+  box-shadow: var(--shadow-card);
+}
+.light .bg-\[var\(--bg-card\)\]:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Modal / overlay depth --- */
+.light .shadow-2xl {
+  box-shadow: var(--shadow-modal) !important;
+}
+
+/* --- Input focus ring in light mode --- */
+.light input:focus,
+.light textarea:focus,
+.light select:focus {
+  outline: 2px solid rgba(34, 197, 94, 0.4);
+  outline-offset: 0;
+  border-color: rgba(34, 197, 94, 0.6) !important;
+}
+
+/* --- Warning / amber boxes — more readable in light --- */
+.light .bg-amber-500\/10  { background-color: rgba(245, 158, 11, 0.12) !important; }
+.light .bg-yellow-500\/10 { background-color: rgba(234, 179,  8, 0.12) !important; }
+.light .border-amber-500\/20  { border-color: rgba(245, 158, 11, 0.35) !important; }
+.light .border-yellow-500\/20 { border-color: rgba(234, 179,  8, 0.35) !important; }
+.light .text-amber-400  { color: #92400E !important; }
+.light .text-amber-300  { color: #92400E !important; }
+.light .text-yellow-400 { color: #854D0E !important; }
+.light .text-yellow-300 { color: #713F12 !important; }
+
+/* --- Red/danger boxes in light --- */
+.light .bg-red-500\/10   { background-color: rgba(239, 68, 68, 0.10) !important; }
+.light .border-red-500\/20 { border-color: rgba(239, 68, 68, 0.30) !important; }
+.light .text-red-300    { color: #991B1B !important; }
+.light .text-red-300\/80 { color: #991B1B !important; }
+.light .text-red-300\/70 { color: #991B1B !important; }
+.light .text-red-300\/60 { color: #991B1B !important; }
+.light .text-red-300\/50 { color: #B91C1C !important; }
+
+/* --- Scrollbar light mode --- */
+.light ::-webkit-scrollbar        { width: 6px; height: 6px; }
+.light ::-webkit-scrollbar-track  { background: var(--scrollbar-track); }
+.light ::-webkit-scrollbar-thumb  { background: var(--scrollbar-thumb); border-radius: 3px; }
+.light ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* --- Table row dividers light mode --- */
+.light table tbody tr {
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* --- General divider color in light mode --- */
+.light hr,
+.light .divide-y > * + * {
+  border-color: var(--border-default);
+}
+
+/* --- Red opacity variants in light mode --- */
+.light .text-red-300\/80,
+.light .text-red-300\/70,
+.light .text-red-300\/60,
+.light .text-red-300\/50 { color: #B91C1C !important; }
+.light .text-amber-300\/80,
+.light .text-amber-300\/70,
+.light .text-amber-300\/60,
+.light .text-amber-300\/50 { color: #92400E !important; }
+
+/* --- Select / option light mode (browser uses dark bg by default) --- */
+.light select {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+.light select option {
+  background-color: #FFFFFF;
+  color: #0F172A;
+}
+
+/* --- bg-base input clarity in light mode --- */
+.light .bg-\[var\(--bg-base\)\] {
+  background-color: #F8FAFC;
+}
+
+/* --- Purple text in light mode (used as icons/decorative) --- */
+.light .text-purple-400 { color: #7C3AED; }
+
+/* --- Tooltip/popover background in light --- */
+.light .bg-\[var\(--bg-tooltip\)\] {
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-medium);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Fix para autocomplete do navegador - agora usa tokens */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--autofill-text);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px var(--autofill-shadow);
+  }
+  
+  /* Para Firefox */
+  input:-moz-autofill,
+  input:-moz-autofill-preview {
+    filter: none;
+  }
+
+}

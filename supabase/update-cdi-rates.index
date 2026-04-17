@@ -1,0 +1,119 @@
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+
+interface BancoCentralResponse {
+  data: string;
+  valor: string;
+}
+
+Deno.serve(async (req: Request) => {
+  try {
+    if (req.method !== 'POST') {
+      return new Response(
+        JSON.stringify({ error: 'Method not allowed' }),
+        { status: 405, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log('🔄 Fetching CDI rates from Banco Central...');
+
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 30);
+
+    const formatDate = (date: Date) => {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    const url = `https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados?formato=json&dataInicial=${formatDate(startDate)}&dataFinal=${formatDate(endDate)}`;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Banco Central API error: ${response.status}`);
+    }
+
+    const data: BancoCentralResponse[] = await response.json();
+    console.log(`✅ Fetched ${data.length} CDI rates`);
+
+    if (!data || data.length === 0) {
+      return new Response(
+        JSON.stringify({ error: 'No CDI data available' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    let inserted = 0;
+
+    for (const item of data) {
+      const [day, month, year] = item.data.split('/');
+      const dateStr = `${year}-${month}-${day}`;
+      
+      // Banco Central returns daily rate in % format
+      // We need to convert to annual rate using compound interest
+      // Formula: annual_rate = (1 + daily_rate/100)^252 - 1
+      const dailyRatePercent = parseFloat(item.valor);
+      const dailyRateDecimal = dailyRatePercent / 100;
+      const annualRate = Math.pow(1 + dailyRateDecimal, 252) - 1;
+
+      const { error } = await supabase
+        .from('cdi_rates')
+        .upsert(
+          {
+            date: dateStr,
+            rate: annualRate,
+            source: 'banco_central',
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'date' }
+        );
+
+      if (error) {
+        console.error(`❌ Error inserting rate for ${dateStr}:`, error);
+      } else {
+        inserted++;
+      }
+    }
+
+    console.log(`✅ Inserted/Updated ${inserted} CDI rates`);
+
+    const latestRate = data[data.length - 1];
+    const latestDailyRate = parseFloat(latestRate.valor) / 100;
+    const latestAnnualRate = Math.pow(1 + latestDailyRate, 252) - 1;
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `Updated ${inserted} CDI rates`,
+        latestRate: {
+          date: latestRate.data,
+          dailyRatePercent: latestRate.valor + '%',
+          annualRatePercent: (latestAnnualRate * 100).toFixed(2) + '% a.a.',
+        },
+      }),
+      { 
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+
+  } catch (error) {
+    console.error('❌ Error:', error);
+    return new Response(
+      JSON.stringify({ 
+        error: error.message || 'Internal server error',
+        details: error.toString()
+      }),
+      { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
+});
